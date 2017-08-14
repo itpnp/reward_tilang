@@ -9,17 +9,18 @@
 			$username = $data['username'];
 			$password = md5($data['password']);
 			// $password = $data['password'];
-			echo $password;
-			exit();
-			$this->db->select('*');
-			$this->db->from('credential');
-			$this->db->where('username', $username);
-			$this->db->where('password', $password);
-			$query = $this->db->get();
-			// echo $username;
-			// echo "<br>";
 			// echo $password;
-			return $query->num_rows();
+			// exit();
+			$this->db->select('credential.*,karyawan.*');
+			$this->db->from('credential');
+			$this->db->join('karyawan', 'credential.id_akses = karyawan.id_akses');
+			$this->db->where('credential.username', $username);
+			$this->db->where('credential.password', $password);
+			$query = $this->db->get();
+			// $test = $query->row();
+			// echo $test->id_akses;
+			// exit();
+			return $query->row();
 		}
 
 		public function select_user($data)

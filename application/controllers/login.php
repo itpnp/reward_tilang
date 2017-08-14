@@ -1,5 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class login extends CI_Controller {
 
@@ -32,7 +31,8 @@ class login extends CI_Controller {
 		$this->output->set_header('Cache-Control:post-check=0,pre-check=0',false);
 		$this->output->set_header('Pragma: no-cache');
 
-		$this->load->model('m_login');
+		$this->load->model('M_login');
+		session_start();
 		// $this->load->library('Userauth');
 		
 	}
@@ -45,15 +45,42 @@ class login extends CI_Controller {
 	}
 
 	public function checkin(){
-
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
-
 		$data = array();
 		$data['username'] = $username;
 		$data['password'] = $password;
-		if($this->m_login->login($data)>0){
-			
+		$dataUser = $this->M_login->login($data);
+		if($dataUser !== null){
+			$data = $dataUser->NIK."|".$dataUser->Nm_Karyawan;
+			$_SESSION['userdata']=$data;
+			if($dataUser->hak_akses == "SUPER ADMIN"){
+				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/programmer'>";
+			}
 		}
+
+	}
+
+	function logout()
+	{
+		session_destroy();
+		echo "<meta http-equiv='refresh' content='0; url=".base_url()."'>";
+	}
+
+	public function registerUserApp(){
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+		$data = array();
+		$data['username'] = $username;
+		$data['password'] = $password;
+		$dataUser = $this->M_login->login($data);
+		if($dataUser !== null){
+			$data = $dataUser->NIK."|".$dataUser->Nm_Karyawan;
+			$_SESSION['userdata']=$data;
+			if($dataUser->hak_akses == "SUPER ADMIN"){
+				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/programmer'>";
+			}
+		}
+
 	}
 }
