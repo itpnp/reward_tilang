@@ -32,8 +32,6 @@
 			return $query->row();
 		}
 
-		
-
 		public function get_id($username)
 		{
 			$this->db->select('id_user');

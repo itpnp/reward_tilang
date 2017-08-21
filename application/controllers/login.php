@@ -56,7 +56,13 @@ class login extends CI_Controller {
 			$_SESSION['userdata']=$data;
 			if($dataUser->hak_akses == "SUPER ADMIN"){
 				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/programmer'>";
+			}else if($dataUser->hak_akses == "REWARD"){
+				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/reward'>";
+			}else{
+				echo "<meta http-equiv='refresh' content='0; url=".base_url()."";
 			}
+		}else{
+			echo "<meta http-equiv='refresh' content='0; url=".base_url().">";
 		}
 
 	}
@@ -67,20 +73,5 @@ class login extends CI_Controller {
 		echo "<meta http-equiv='refresh' content='0; url=".base_url()."'>";
 	}
 
-	public function registerUserApp(){
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
-		$data = array();
-		$data['username'] = $username;
-		$data['password'] = $password;
-		$dataUser = $this->M_login->login($data);
-		if($dataUser !== null){
-			$data = $dataUser->NIK."|".$dataUser->Nm_Karyawan;
-			$_SESSION['userdata']=$data;
-			if($dataUser->hak_akses == "SUPER ADMIN"){
-				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/programmer'>";
-			}
-		}
-
-	}
+	
 }
