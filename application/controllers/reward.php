@@ -33,6 +33,7 @@ class reward extends CI_Controller {
 
 		$this->load->model('M_karyawan');
 		$this->load->model('M_lean');
+		$this->load->model('M_kategori');
 		// $this->load->library('Userauth');
 		
 	}
@@ -116,10 +117,11 @@ class reward extends CI_Controller {
 			$data["nik"]=$pecah[0];
 			$data["nama"]=$pecah[1];
 			$data["dataReward"] = $this->M_lean->selectAll();
+			$data["dataRewardArray"] = $this->M_lean->selectArray();
 			$this->load->view('Reward/v_header.php',$data);
 			$this->load->view('Reward/v_sidebar.php',$data);
 			$this->load->view('Reward/v_reward_data.php',$data);
-			$this->load->view('Reward/v_footer.php');
+			// $this->load->view('Reward/v_footer.php');
 		}
 	}
 

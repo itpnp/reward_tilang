@@ -21,11 +21,14 @@
     <script src="<?php echo base_url(); ?>assets/css/iCheck/icheck.min.js"></script>
 
     <!-- Custom Theme Scripts -->
+    <!-- <script src="<?php echo base_url(); ?>assets/js/Chart.js/dist/Chart.min.js"></script> -->
+    <script src="<?php echo base_url(); ?>assets/js/Chart.js/dist/Chart.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/custom.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/dataTables.bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/dataTables.bootstrap.js"></script>
+
     <script type="text/javascript">
     function showNominal(){
       var level = document.getElementById("level");

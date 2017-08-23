@@ -14,14 +14,14 @@
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url()?>index.php/programmer/chooseEmployee">Tambah Pengguna Aplikasi</a></li>
                       <li><a href="form_advanced.html">Data Pengguna Aplikasi</a></li>
+                      <li><a href="<?php echo base_url()?>index.php/programmer/kategoriPage">Kategori Tilang</a></li>
+                      <li><a href="<?php echo base_url()?>index.php/programmer/subKategoriPage">Sub Kategori Tilang</a></li>
                     </ul>
                   </li>
                 </ul>
               </div>
             </div>
             <!-- /sidebar menu -->
-
-
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">

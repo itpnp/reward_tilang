@@ -28,7 +28,20 @@
 			$query = $this->db->get();
 			return $query->result();
 		}
-
+		public function selectArray(){
+			$this->db->select('*');
+			$this->db->from('lean');
+			$query = $this->db->get();
+			$list = $query->result();
+			$data = array();
+			$indexRow = 0;
+			foreach ($list as $row) {
+				$data[$indexRow][0] = $row->id_lean;
+				$data[$indexRow][1] = $row->level_reward;
+				$indexRow++;
+			}
+			return $data;
+		}
 		public function findById($id){
 			$this->db->select('*');
 			$this->db->from('lean');
