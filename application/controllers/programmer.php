@@ -34,6 +34,7 @@ class programmer extends CI_Controller {
 		$this->load->model('M_karyawan');
 		$this->load->model('M_kategori');
 		$this->load->model('M_login');
+		$this->load->model('M_nominal');
 		// $this->load->library('Userauth');
 		
 	}
@@ -271,6 +272,21 @@ class programmer extends CI_Controller {
 			}
 		}else{
 
+		}
+	}
+
+	public function finePage(){
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$data["dataTarif"] = $this->M_nominal->selectAll();
+			$this->load->view('SuperAdmin/v_header.php',$data);
+			$this->load->view('SuperAdmin/v_sidebar.php',$data);
+			$this->load->view('SuperAdmin/v_fine_page.php',$data);
+			$this->load->view('SuperAdmin/v_footer.php');
 		}
 	}
 }

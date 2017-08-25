@@ -16,6 +16,7 @@
                       <li><a href="<?php echo base_url()?>index.php/programmer/userAppPage">Data Pengguna Aplikasi</a></li>
                       <li><a href="<?php echo base_url()?>index.php/programmer/kategoriPage">Kategori Tilang</a></li>
                       <li><a href="<?php echo base_url()?>index.php/programmer/subKategoriPage">Sub Kategori Tilang</a></li>
+                      <li><a href="<?php echo base_url()?>index.php/programmer/finePage">Tarif Tilang</a></li>
                     </ul>
                   </li>
                 </ul>
