@@ -13,7 +13,7 @@
                   <li><a><i class="fa fa-home"></i> SETTING <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url()?>index.php/programmer/chooseEmployee">Tambah Pengguna Aplikasi</a></li>
-                      <li><a href="form_advanced.html">Data Pengguna Aplikasi</a></li>
+                      <li><a href="<?php echo base_url()?>index.php/programmer/userAppPage">Data Pengguna Aplikasi</a></li>
                       <li><a href="<?php echo base_url()?>index.php/programmer/kategoriPage">Kategori Tilang</a></li>
                       <li><a href="<?php echo base_url()?>index.php/programmer/subKategoriPage">Sub Kategori Tilang</a></li>
                     </ul>

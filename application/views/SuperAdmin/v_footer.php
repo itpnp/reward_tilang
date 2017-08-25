@@ -44,5 +44,28 @@
         $("#chooseCategoryModal").val(data[2]);
         })
     </script>
+    <script>
+    $('#delete').on('show.bs.modal', function(e) {
+        var $modal = $(this),
+        data = e.relatedTarget.id;
+        $("#idSubCategoryDelete").val(data);
+        })
+    </script>
+    <script>
+    $('#editCategory').on('show.bs.modal', function(e) {
+        var $modal = $(this),
+        data = e.relatedTarget.id;
+        data = data.split("@");
+        $("#idCategory").val(data[0]);
+        $("#categoryNameModal").val(data[1]);
+        })
+    </script>
+    <script>
+    $('#deleteCategory').on('show.bs.modal', function(e) {
+        var $modal = $(this),
+        data = e.relatedTarget.id;
+        $("#idCategoryDelete").val(data);
+        })
+    </script>
   </body>
 </html>

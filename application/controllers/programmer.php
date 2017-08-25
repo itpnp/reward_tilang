@@ -33,7 +33,7 @@ class programmer extends CI_Controller {
 
 		$this->load->model('M_karyawan');
 		$this->load->model('M_kategori');
-
+		$this->load->model('M_login');
 		// $this->load->library('Userauth');
 		
 	}
@@ -92,11 +92,31 @@ class programmer extends CI_Controller {
 			$pecah=explode("|",$session);
 			$data["nik"]=$pecah[0];
 			$data["nama"]=$pecah[1];
-			$data["dataKaryawan"] = $this->M_karyawan->selectAll();
+			$data["dataKaryawan"] = $this->M_karyawan->findById($id);
 			$this->load->view('SuperAdmin/v_header.php',$data);
 			$this->load->view('SuperAdmin/v_sidebar.php',$data);
 			$this->load->view('SuperAdmin/v_add_user_app.php',$data);
 			$this->load->view('SuperAdmin/v_footer.php');
+		}
+	}
+
+	public function saveUserApp(){
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$credential = array();
+			$credential['username'] = $this->input->post('username');
+			$credential['password'] = $password = md5($this->input->post('password'));
+			$credential['hak_akses'] = $this->input->post('hakAkses');
+			$nik = $this->input->post('nik');
+			if($this->M_login->addUserApp($nik, $credential)){
+				$this->userAppPage();
+			}else{
+				$this->userAppPage();
+			}
 		}
 	}
 
@@ -111,6 +131,21 @@ class programmer extends CI_Controller {
 			$this->load->view('SuperAdmin/v_header.php',$data);
 			$this->load->view('SuperAdmin/v_sidebar.php',$data);
 			$this->load->view('SuperAdmin/v_add_kategori_tilang.php',$data);
+			$this->load->view('SuperAdmin/v_footer.php');
+		}
+	}
+
+	public function userAppPage(){
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$data["dataPengguna"] = $this->M_karyawan->selectUserApp();
+			$this->load->view('SuperAdmin/v_header.php',$data);
+			$this->load->view('SuperAdmin/v_sidebar.php',$data);
+			$this->load->view('SuperAdmin/v_show_user_app.php',$data);
 			$this->load->view('SuperAdmin/v_footer.php');
 		}
 	}
@@ -131,13 +166,14 @@ class programmer extends CI_Controller {
 		}
 	}
 
-	public function deleteCategory($id){
+	public function deleteCategory(){
 		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
 		if($session!=""){
 			$data = array();
 			$pecah=explode("|",$session);
 			$data["nik"]=$pecah[0];
 			$data["nama"]=$pecah[1];
+			$id = $this->input->post('idCategoryDelete');
 			$dataKategori = array();
 			$dataKategori['status'] = "NON AKTIF";
 			if($this->M_kategori->updateCategory($id,$dataKategori)){
@@ -189,9 +225,7 @@ class programmer extends CI_Controller {
 			$data["nik"]=$pecah[0];
 			$data["nama"]=$pecah[1];
 			$dataSubKategori = array();
-			$id = $this->input->post('idSubCategory');
-			echo $id;
-			exit();
+			$id = $this->input->post('idSubCategoryDelete');
 			$dataSubKategori['status'] = "NON AKTIF";
 			if($this->M_kategori->updateSubCategory($id,$dataSubKategori)){
 				$this->subKategoriPage();
@@ -215,6 +249,25 @@ class programmer extends CI_Controller {
 			$dataSubKategori['status'] = "AKTIF";
 			if($this->M_kategori->updateSubCategory($id,$dataSubKategori)){
 				$this->subKategoriPage();
+			}
+		}else{
+
+		}
+	}
+
+	public function updateCategory(){
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$id = $this->input->post('idCategory');
+			$dataKategori = array();
+			$dataKategori['id_kategori'] = $id;
+			$dataKategori['nama_kategori'] = $this->input->post('categoryName');
+			if($this->M_kategori->updateCategory($id,$dataKategori)){
+				$this->kategoriPage();
 			}
 		}else{
 

@@ -139,7 +139,7 @@
       </div>
       <div class="modal-body">
          <form id="demo-form2" role="form" method="post" action="<?php echo base_url()?>index.php/programmer/deleteSubCategory" data-parsley-validate class="form-horizontal form-label-left">
-            <input type="hidden" name = "idSubCategory" id= "idSubCategory"/>
+            <input type="hidden" name = "idSubCategoryDelete" id= "idSubCategoryDelete"/>
             <p>Yakin ingin menghapus ?</p>
             <div class="form-group">
               <div class="col-md-10 col-sm-10 col-xs-12 col-md-offset-6">

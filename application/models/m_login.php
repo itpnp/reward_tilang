@@ -51,9 +51,29 @@
 
 		}
 
-		public function update($id, $data)
-		{
-			return $this->db->update('user', $data, array('id_user' => $id));
+		// public function update($id, $data)
+		// {
+		// 	return $this->db->update('user', $data, array('id_user' => $id));
+		// }
+
+		public function addUserApp($nik, $credential){
+			$this->db=$this->load->database('default',true);
+			$this->db->trans_begin();
+			$success = $this->db->insert('credential', $credential);
+			if($success){
+				$data['id_akses'] = $this->db->insert_id();
+				$this->db->where('karyawan.NIK',$nik);
+				$success = $this->db->update('karyawan',$data);
+				if(!$success){
+					$success = false;
+					$errNo   = $this->db->_error_number();
+					$errMess = $this->db->_error_message();
+					array_push($errors, array($errNo, $errMess));
+				}
+			}
+			$this->db->trans_commit();
+			$this->db->trans_complete();
+			return $success;
 		}
 
 	}
