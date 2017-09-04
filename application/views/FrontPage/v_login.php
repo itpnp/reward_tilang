@@ -10,10 +10,10 @@
             </div><!--/ Codrops top bar -->
 			
 			<header>
-			
-				<h1><strong>Aplikasi Tilang Dan Reward</strong></h1>
-				<h2>PT. PURA NUSAPERSADA UNIT HOLOGRAFI II</h2>
-				
+				<img src="<?php echo base_url(); ?>assets/images/logo pnp small.PNG">
+				<h1>PT. PURA NUSAPERSADA UNIT HOLOGRAFI II</h2>
+				<h2><strong>Aplikasi Tilang Dan Reward</strong></h1>
+                				
 			</header>
 			
 			<section class="main">
