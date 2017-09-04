@@ -30,7 +30,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i></a>
+              <a href="index.html" class="site_title"><img src="<?php echo base_url(); ?>assets/images/logo pnp small.PNG"></a>
             </div>
 
             <div class="clearfix"></div>

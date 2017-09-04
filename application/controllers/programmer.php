@@ -274,7 +274,87 @@ class programmer extends CI_Controller {
 
 		}
 	}
+	
+	public function updateUserApp(){
+			$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+			if($session!=""){
+				$data = array();
+				$pecah=explode("|",$session);
+				$data["nik"]=$pecah[0];
+				$data["nama"]=$pecah[1];
+				$id = $this->input->post('idUser');
+				$dataUser = array();
+				$dataUser['id_akses'] = $id;
+				$dataUser['username'] = $this->input->post('UsernameModal');
+				$dataUser['password'] = $password = md5($this->input->post('PassModal'));
+	            $dataUser['hak_akses'] = $this->input->post('chooseUserAppModal');
+				if($this->M_kategori->updateUserApp($id,$dataUser)){
+					$this->userAppPage();
+				}
+			}else{
 
+			}
+		}
+
+		public function deleteUserApp(){
+			$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+			if($session!=""){
+				$data = array();
+				$pecah=explode("|",$session);
+				$data["nik"]=$pecah[0];
+				$data["nama"]=$pecah[1];
+				$dataUser = array();
+				$id = $this->input->post('idUserDelete');
+				$dataUser['status'] = "NON AKTIF";
+				if($this->M_karyawan->updateUserApp($id,$dataUser)){
+					$this->userAppPage();
+				}
+			}else{
+
+			}
+		}
+
+			public function deleteNominal(){
+			$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+			if($session!=""){
+				$data = array();
+				$pecah=explode("|",$session);
+				$data["nik"]=$pecah[0];
+				$data["nama"]=$pecah[1];
+				$dataNominal = array();
+				$id = $this->input->post('idNominalDelete');
+				$dataNominal['status'] = "NON AKTIF";
+				if($this->M_nominal->updateNominal($id,$dataNominal)){
+					$this->finePage();
+				}
+			}else{
+
+			}
+		}
+
+			public function updateNominal(){
+			$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+			if($session!=""){
+				$data = array();
+				$pecah=explode("|",$session);
+				$data["nik"]=$pecah[0];
+				$data["nama"]=$pecah[1];
+				$id = $this->input->post('idNominal');
+				$dataNominal = array();
+				$dataNominal['id_nominal'] = $id;
+				$dataNominal['kode_jabatan'] = $this->input->post('chooseJabatanModal');
+				$dataNominal['tilang_1'] = $this->input->post('tilang1');
+	            $dataNominal['tilang_2'] = $this->input->post('tilang2');
+				$dataNominal['tilang_3'] = $this->input->post('tilang3');
+				$dataNominal['tilang_4'] = $this->input->post('tilang4');
+				$dataNominal['tilang_5'] = $this->input->post('tilang5');
+				if($this->M_nominal->updateNominal($id,$dataNominal)){
+					$this->finePage();
+				}
+			}else{
+
+			}
+		}
 	public function finePage(){
 		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
 		if($session!=""){

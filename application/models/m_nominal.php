@@ -13,6 +13,32 @@
 			return $query->result();
 		}
 
+		public function displayJabatan() 
+		{
+			$this->db = $this->load->database('default', true);
+			$this->db->select('*');
+			$this->db->from('jabatan');
+			$this->db->where("(status = 'AKTIF')", NULL, FALSE);
+			$query = $this->db->get();
+			return $query->result();
+		}
+
+			public function updateNominal($id,$data){
+			$this->db=$this->load->database('default',true);
+			$this->db->trans_begin();
+			$this->db->where('id_nominal',$id);
+			$success = $this->db->update('nominal_tilang', $data);
+			$this->db->trans_commit();
+			$this->db->trans_complete();
+			if(!$success){
+				$success = false;
+				$errNo   = $this->db->_error_number();
+				$errMess = $this->db->_error_message();
+				array_push($errors, array($errNo, $errMess));
+			}
+			return $success;
+		}
+
 		// public function findById($id) 
 		// {
 		// 	$this->db = $this->load->database('default', true);
