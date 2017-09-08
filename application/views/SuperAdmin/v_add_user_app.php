@@ -38,9 +38,11 @@
                         </label>
                         <div class="col-sm-6">
                           <select class="form-control" name="hakAkses">
+                            <option value="HR/IS">HR/IS</option>
                             <option value="KABAG">KABAG</option>
                             <option value="REWARD">REWARD</option>
-                            <option value="TILANG">TILANG</option>
+                            <option value="SISTEM">SISTEM</option>
+                            <option value="SSEKRETARIAT">SEKRETARIAT</option>
                             <option value="SUPER ADMIN">SUPER ADMIN</option>
                           </select>
                         </div>

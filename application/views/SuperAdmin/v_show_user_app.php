@@ -38,7 +38,7 @@
                                     <td class='warning'>".$row->Nm_Karyawan."</td>
                                     
                                     <td class='warning'>".$row->hak_akses."</td>
-                                    <td class='warning'><button class='btn btn-primary btn-xs'  id = '".$row->id_akses."@".$row->hak_akses."@".$row->username."' data-title='Edit' data-toggle='modal' data-target='#editUser' ><span class='glyphicon glyphicon-pencil'></span></button> |  <button class='btn btn-danger btn-xs' id = '".$row->id_akses."' data-title='Edit' data-toggle='modal' data-target='#deleteUser' ><span class='glyphicon glyphicon-trash'></span></button>
+                                    <td class='warning'><button class='btn btn-primary btn-xs'  id = '".$row->id_akses."@".$row->hak_akses."@".$row->username."' data-title='Edit' data-toggle='modal' data-target='#editUser' ><span class='glyphicon glyphicon-pencil'></span></button> |  <button class='btn btn-danger btn-xs' id = '".$row->id_akses."' data-title='Edit' data-toggle='modal' data-target='#deleteUser' ><span class='glyphicon glyphicon-trash'></span></button></td>
                                     </tr>";
                                 }
                             ?>

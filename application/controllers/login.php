@@ -58,6 +58,8 @@ class login extends CI_Controller {
 				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/programmer'>";
 			}else if($dataUser->hak_akses == "REWARD"){
 				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/reward'>";
+			}else if($dataUser->hak_akses == "SISTEM"){
+				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/tilang'>";
 			}else{
 				echo "<meta http-equiv='refresh' content='0; url=".base_url()."";
 			}
