@@ -3,6 +3,7 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
+                  <li><a href="<?php echo base_url()?>index.php/tilang/index">HOME</a></li>
                   <li><a href="<?php echo base_url()?>index.php/tilang/chooseEmployee">Tilang Karyawan</a></li>
 <!--                   <li><a href="<?php echo base_url()?>index.php/programmer/userAppPage">Data Pengguna Aplikasi</a></li>
                   <li><a href="<?php echo base_url()?>index.php/programmer/kategoriPage">Kategori Tilang</a></li>

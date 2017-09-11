@@ -39,6 +39,16 @@
 			return $success;
 		}
 
+		public function findByJabatan($id)
+		{
+			
+			$this->db = $this->load->database('default', true);
+			$this->db->select('*');
+			$this->db->from('nominal_tilang');
+			$this->db->where('kode_jabatan', $id);
+			$query = $this->db->get();
+			return $query->row();
+		}
 		// public function findById($id) 
 		// {
 		// 	$this->db = $this->load->database('default', true);

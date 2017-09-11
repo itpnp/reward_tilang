@@ -18,7 +18,21 @@
 			}
 		return $success;
 		}
-
+		public function selectSubCategoryArray(){
+			$this->db->select('*');
+			$this->db->from('sub_kategori');
+			$query = $this->db->get();
+			$list = $query->result();
+			$data = array();
+			$indexRow = 0;
+			foreach ($list as $row) {
+				$data[$indexRow][0] = $row->id_sub_kategori;
+				$data[$indexRow][1] = $row->id_kategori;
+				$data[$indexRow][2] = $row->nama_sub_kategori;
+				$indexRow++;
+			}
+			return $data;
+		}
 		public function selectAll(){
 			$this->db->select('*');
 			$this->db->from('kategori');

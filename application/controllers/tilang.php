@@ -34,6 +34,8 @@ class tilang extends CI_Controller {
 		$this->load->model('M_karyawan');
 		$this->load->model('M_lean');
 		$this->load->model('M_kategori');
+		$this->load->model('M_tilang');
+		$this->load->model('M_nominal');
 		// $this->load->library('Userauth');
 		
 	}
@@ -46,12 +48,12 @@ class tilang extends CI_Controller {
 			$pecah=explode("|",$session);
 			$data["nik"]=$pecah[0];
 			$data["nama"]=$pecah[1];
-			// $data["dataTilang"] = $this->M_tilang->selectAll();
-			// $data["dataTilangArray"] = $this->M_tilang->selectArray();
+			$data["dataTilang"] = $this->M_tilang->selectAll();
+			$data["dataTilangArray"] = $this->M_tilang->selectArray();
 			$this->load->view('Tilang/v_header.php',$data);
 			$this->load->view('Tilang/v_sidebar.php');
 			$this->load->view('Tilang/v_main.php',$data);
-			$this->load->view('Tilang/v_footer.php');
+			// $this->load->view('Tilang/v_footer.php');
 
 		}
 		
@@ -65,7 +67,7 @@ class tilang extends CI_Controller {
 			$data["nik"]=$pecah[0];
 			$data["nama"]=$pecah[1];
 			$data["dataKaryawan"] = $this->M_karyawan->selectAll();
-
+			
 			$this->load->view('Tilang/v_header.php',$data);
 			$this->load->view('Tilang/v_sidebar.php',$data);
 			$this->load->view('Tilang/v_choose_employee.php',$data);
@@ -82,6 +84,21 @@ class tilang extends CI_Controller {
 			$data["nama"]=$pecah[1];
 			$data["dataKaryawan"] = $this->M_karyawan->findById($id);
 			$data["dataKategori"] = $this->M_kategori->selectAll();
+			$data["subCategory"] = $this->M_kategori->selectSubCategoryArray();
+			$data["jumlahTilang"] = $this->M_tilang->countTotalTicket($id,date('M'));
+			$data["dendaTilang"] = 0;
+			$nominal = $this->M_nominal->findByJabatan($data["dataKaryawan"]->Kd_Jabatan);
+			if($data["jumlahTilang"]->total==0){
+				$data["dendaTilang"] = $nominal->tilang_1;
+			}else if($data["jumlahTilang"]->total==1){
+				$data["dendaTilang"] = $nominal->tilang_2;
+			}else if($data["jumlahTilang"]->total==2){
+				$data["dendaTilang"] = $nominal->tilang_3;
+			}else if($data["jumlahTilang"]->total==3){
+				$data["dendaTilang"] = $nominal->tilang_4;
+			}else if($data["jumlahTilang"]->total==4){
+				$data["dendaTilang"] = $nominal->tilang_5;
+			}
 			$this->load->view('Tilang/v_header.php',$data);
 			$this->load->view('Tilang/v_sidebar.php',$data);
 			$this->load->view('Tilang/v_form_tilang.php',$data);
@@ -89,30 +106,30 @@ class tilang extends CI_Controller {
 		}
 	}
 
-	// public function saveLean(){
-	// 	$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
-	// 	if($session!=""){
-	// 		$data = array();
-	// 		$pecah=explode("|",$session);
-	// 		$data["nik"]=$pecah[0];
-	// 		$data["nama"]=$pecah[1];
-	// 		$dataLean = array();
-	// 		$dataLean['nik_admin'] = $data["nik"];
-	// 		$dataLean['judul'] = $this->input->post('judulProposal');
-	// 		$dataLean['tanggal_pengajuan'] = date("Y-m-d",strtotime($this->input->post('tanggalPengajuan')));
-	// 		$dataLean['nik'] = $this->input->post('nik');
-	// 		// echo $this->input->post('tanggalPengajuan');
-	// 		// exit();
-	// 		$dataLean['nominal_reward'] = 0;
-	// 		$dataLean['level_reward'] = 'PENGAJUAN';
+	public function saveTilang(){
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$dataTilang = array();
+			$dataTilang['nik'] = $this->input->post('nik');
+			$dataTilang['nik_penilang'] = $data["nik"];
+			$dataTilang['tanggal_tilang'] = date('Y-m-d H:i',strtotime( $this->input->post('tanggalTilang')));
+			$dataTilang['id_sub_kategori'] = $this->input->post('chooseSubCategory');
+			$dataTilang['nominal_tilang'] = $this->input->post('nominalTilang');
+			// echo $this->input->post('tanggalPengajuan');
+			// exit();
 
-	// 		if($this->M_lean->saveLean($dataLean)){
-	// 			$this->dataReward();
-	// 		}else{
+			if($this->M_tilang->savetilang($dataTilang)){
+				$this->index();
+				// echo "SUKSES!!";
+			}else{
 
-	// 		}
-	// 	}
-	// }
+			}
+		}
+	}
 	// public function dataReward(){
 	// 	$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
 	// 	if($session!=""){

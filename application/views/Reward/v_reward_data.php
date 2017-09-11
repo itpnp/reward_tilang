@@ -69,7 +69,6 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Reward Chart</h2>
-
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
