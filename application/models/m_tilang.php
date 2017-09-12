@@ -48,6 +48,38 @@
 			return $data;
 		}
 		
+		public function selectAllByDept($deptName){
+			$this->db->select('*');
+			$this->db->from('tilang');
+			$this->db->join('karyawan', 'karyawan.nik = tilang.nik');
+			$this->db->join('bagian', 'karyawan.Kd_Bagian = bagian.Kd_Bagian');
+			$this->db->join('sub_kategori', 'sub_kategori.id_sub_kategori = tilang.id_sub_kategori');
+			$this->db->join('kategori', 'sub_kategori.id_kategori = kategori.id_kategori');
+			$this->db->where('bagian.Nm_Bagian', $deptName);
+			$query = $this->db->get();
+			return $query->result();
+		}
+
+		public function selectArrayByDept($deptName){
+			$this->db->select('*');
+			$this->db->from('tilang');
+			$this->db->join('karyawan', 'karyawan.nik = tilang.nik');
+			$this->db->join('bagian', 'karyawan.Kd_Bagian = bagian.Kd_Bagian');
+			$this->db->join('sub_kategori', 'sub_kategori.id_sub_kategori = tilang.id_sub_kategori');
+			$this->db->join('kategori', 'sub_kategori.id_kategori = kategori.id_kategori');
+			$this->db->where('bagian.Nm_Bagian', $deptName);
+			$query = $this->db->get();
+			$list = $query->result();
+			$data = array();
+			$indexRow = 0;
+			foreach ($list as $row) {
+				$data[$indexRow][0] = $row->id_tilang;
+				$data[$indexRow][1] = $row->nama_kategori;
+				$indexRow++;
+			}
+			return $data;
+		}
+
 		public function countTotalTicket($id,$month){
 			$this->db->select('count(*) as total');
 			$this->db->from('tilang');

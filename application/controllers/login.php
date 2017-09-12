@@ -52,14 +52,17 @@ class login extends CI_Controller {
 		$data['password'] = $password;
 		$dataUser = $this->M_login->login($data);
 		if($dataUser !== null){
-			$data = $dataUser->NIK."|".$dataUser->Nm_Karyawan;
+			$data = $dataUser->NIK."|".$dataUser->Nm_Karyawan."|".$dataUser->Nm_Bagian;
 			$_SESSION['userdata']=$data;
+			// exit();
 			if($dataUser->hak_akses == "SUPER ADMIN"){
 				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/programmer'>";
 			}else if($dataUser->hak_akses == "REWARD"){
 				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/reward'>";
 			}else if($dataUser->hak_akses == "SISTEM"){
 				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/tilang'>";
+			}else if($dataUser->hak_akses == "KABAG"){
+				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/kabag'>";
 			}else{
 				echo "<meta http-equiv='refresh' content='0; url=".base_url()."";
 			}

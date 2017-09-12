@@ -11,14 +11,15 @@
 			// $password = $data['password'];
 			// echo $password;
 			// exit();
-			$this->db->select('credential.*,karyawan.*');
+			$this->db->select('credential.*,karyawan.*,bagian.*');
 			$this->db->from('credential');
 			$this->db->join('karyawan', 'credential.id_akses = karyawan.id_akses');
+			$this->db->join('bagian', 'karyawan.Kd_Bagian = bagian.Kd_Bagian');
 			$this->db->where('credential.username', $username);
 			$this->db->where('credential.password', $password);
 			$query = $this->db->get();
 			// $test = $query->row();
-			// echo $test->id_akses;
+			// echo $test->Nm_Bagian;
 			// exit();
 			return $query->row();
 		}

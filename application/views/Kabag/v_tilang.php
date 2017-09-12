@@ -5,37 +5,14 @@
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Welcome Home, <?php if($nama!=null) echo $nama ;?> </h3>
-              </div>
-            </div>
+
             <div class="clearfix"></div>
-            <form role="form" action="<?php echo base_url()?>index.php/tilang/saveTilang" method="post" data-parsley-validate class="form-horizontal form-label-left">
+
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>SEARCH</h2>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Tanggal Pelanggaran</label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input class="form-control" id="date" name="tanggalTilang" type="text" required/>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </form>
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>DATA TILANG</h2>
+                    <h2>DATA TILANG - <?php if($departemen!=null) echo $departemen ;?></h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -58,7 +35,7 @@
                                   echo "<tr>
                                     <td class='warning'>".$row->NIK."</td>
                                     <td class='warning'>".$row->Nm_Karyawan."</td>
-                                    <td class='warning'>".$row->tanggal_tilang."</td>
+                                    <td class='warning'>".date('d M Y',strtotime($row->tanggal_tilang))."</td>
                                     <td class='warning'>".$row->nama_kategori."</td>
                                     </tr>";
                                 }

@@ -1,78 +1,74 @@
 
-
-
-
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Welcome Home, <?php if($nama!=null) echo $nama ;?> </h3>
-              </div>
-            </div>
+
             <div class="clearfix"></div>
-            <form role="form" action="<?php echo base_url()?>index.php/tilang/saveTilang" method="post" data-parsley-validate class="form-horizontal form-label-left">
+
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>SEARCH</h2>
+                    <h2>Data Reward</h2>
                     <div class="clearfix"></div>
                   </div>
+
                   <div class="x_content">
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Tanggal Pelanggaran</label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input class="form-control" id="date" name="tanggalTilang" type="text" required/>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </form>
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>DATA TILANG</h2>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
+
                     <div class="table-responsive">
                       <table class="table table-striped jambo_table" id="dataTables-example">
                         <thead>
                           <tr class="headings">
-                            <th class="column-title">NIK </th>
+                            <th class="column-title">Judul Proposal </th>
                             <th class="column-title">NAMA KARYAWAN</th>
-                            <th class="column-title">TANGGAL TILANG </th>
-                            <th class="column-title">KATEGORI</th>
+                            <th class="column-title">BAGIAN </th>
+                            <th class="column-title">Tanggal Pengajuan</th>
+                            <th class="column-title">STATUS </th>
+                            <th class="column-title no-link last"><span class="nobr">Reward</span>
+                            </th>
                           </tr>
                         </thead>
 
                         <tbody>
                           <?php
-                              $nomor=1;
-                              foreach($dataTilang as $row)
+                              foreach($dataReward as $row)
                                 {
-                                  echo "<tr>
-                                    <td class='warning'>".$row->NIK."</td>
-                                    <td class='warning'>".$row->Nm_Karyawan."</td>
-                                    <td class='warning'>".$row->tanggal_tilang."</td>
-                                    <td class='warning'>".$row->nama_kategori."</td>
-                                    </tr>";
+                                  if($row->tanggal_penyerahan_reward == null){
+                                    echo "<tr>
+                                      <td class='warning'>".$row->judul."</td>
+                                      <td class='warning'>".$row->Nm_Karyawan."</td>
+                                      <td class='warning'>".$row->Nm_Bagian."</td>
+                                      <td class='warning'>".date('d M Y',strtotime($row->tanggal_pengajuan))."</td>
+                                      <td class='warning'>".$row->level_reward."</td>
+                                      <td class='warning'>BELUM</td>
+                                      </tr>";
+
+                                  }else{
+                                    echo "<tr>
+                                      <td class='warning'>".$row->judul."</td>
+                                      <td class='warning'>".$row->Nm_Karyawan."</td>
+                                      <td class='warning'>".$row->Nm_Bagian."</td>
+                                      <td class='warning'>".date('d M Y',strtotime($row->tanggal_pengajuan))."</td>
+                                      <td class='warning'>".$row->level_reward."</td>
+                                      <td class='warning'>SUDAH</td>
+                                      </tr>";
+                                  }
+                                  
                                 }
                             ?>
                         </tbody>
                       </table>
                     </div>
-                  </div><!-- end of x_content-->
-                </div><!-- end of x_panel-->
-              </div><!-- end of div col md 12 -->
+							
+						
+                  </div>
+                </div>
+              </div>
+
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Tilang Chart</h2>
+                    <h2>Reward Chart</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -80,11 +76,9 @@
                   </div>
                 </div>
               </div>
-            </div><!-- end of div row -->
+            </div>
           </div>
         </div>
-        <!-- /page content -->
-
         <!-- footer content -->
         <footer>
           <div class="pull-right">
@@ -117,28 +111,22 @@
     <script src="<?php echo base_url(); ?>assets/js/dataTables.bootstrap.js"></script>
 
     <script type="text/javascript">
-    var obj = <?php if($dataTilangArray!=null )echo json_encode($dataTilangArray); ?>;
-    var limaR = 0;
-    var smk3 = 0;
-    var smp = 0;
-    var kedisiplinan = 0;
-    var keterlambatan = 0;
-    var evaluasi = 0;
+    var obj = <?php if($dataRewardArray!=null )echo json_encode($dataRewardArray); ?>;
+    var jumlahPengajuan = 0;
+    var jumlahDipertimbangkan = 0;
+    var jumlahProgram = 0;
+    var jumlahRealisasi = 0;
     var jumlahData = 0;
     for(var i=0; i<obj.length;i++){
       console.log(obj[i][1]);
-      if(obj[i][1] == "5R"){
-        limaR++;
-      }else if(obj[i][1] == "SMK3"){
-        smk3++;
-      }else if(obj[i][1] == "SMP"){
-        smp++;
-      }else if(obj[i][1] == "KEDISIPLINAN"){
-        kedisiplinan++;
-      }else if(obj[i][1] == "KETERLAMBATAN"){
-        keterlambatan++;
-      }else if(obj[i][1] == "EVALUASI DAN PENCAPAIAN SASARAN MUTU"){
-        evaluasi++;
+      if(obj[i][1] == "PENGAJUAN"){
+        jumlahPengajuan++;
+      }else if(obj[i][1] == "DIPERTIMBANGKAN"){
+        jumlahDipertimbangkan++;
+      }else if(obj[i][1] == "MENJADI PROGRAM"){
+        jumlahProgram++;
+      }else if(obj[i][1] == "REALISASI"){
+        jumlahRealisasi++;
       }
       jumlahData++;
     }
@@ -151,10 +139,10 @@
         scaleStartValue : 0,
         type: 'bar',
         data: {
-            labels: ["5R", "SMK3", "SMP", "KEDISIPLINAN", "KETERLAMBATAN", "SASARAN MUTU"],
+            labels: ["PENGAJUAN", "DIPERTIMBANGKAN", "MENJADI PROGRAM", "REALISASI"],
             datasets: [{
-                label: 'Jumlah Tilang',
-                data: [limaR, smk3, smp, kedisiplinan, keterlambatan, kedisiplinan,evaluasi],
+                label: 'Jumlah Proposal Lean',
+                data: [jumlahPengajuan, jumlahDipertimbangkan, jumlahProgram, jumlahRealisasi],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -194,5 +182,8 @@
         });
     });
     </script>
+  </body>
+</html>
+        <!-- /page content -->
 
         
