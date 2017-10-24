@@ -103,6 +103,7 @@
 			$this->db->select('*');
 			$this->db->from('lean');
 			$this->db->join('karyawan', 'karyawan.nik = lean.nik');
+			$this->db->join('bagian', 'bagian.Kd_Bagian = karyawan.Kd_Bagian');
 			$this->db->where("MONTH(tanggal_pengajuan) = '".$month."'", NULL, FALSE);
 			$this->db->where("YEAR(tanggal_pengajuan) = '".$year."'", NULL, FALSE);
 			$query = $this->db->get();

@@ -78,7 +78,12 @@
                   <input class="form-control" id="nominalTilang" value="<?php if($dendaTilang != null) echo $dendaTilang;?>" name = "nominalTilang" type="text" required readonly/>
                 </div>
               </div>
-              
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">KETERANGAN</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input class="form-control" id="keterangan" name = "keterangan" type="text" required />
+                </div>
+              </div>
               <div class="ln_solid"></div>
               <div class="form-group">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

@@ -130,10 +130,12 @@
 			$this->db->select('*');
 			$this->db->from('tilang');
 			$this->db->join('karyawan', 'karyawan.nik = tilang.nik');
+			$this->db->join('bagian', 'karyawan.Kd_Bagian = bagian.Kd_Bagian');
 			$this->db->join('sub_kategori', 'sub_kategori.id_sub_kategori = tilang.id_sub_kategori');
 			$this->db->join('kategori', 'sub_kategori.id_kategori = kategori.id_kategori');
 			$this->db->where("MONTH(tanggal_tilang) = '".$month."'", NULL, FALSE);
 			$this->db->where("YEAR(tanggal_tilang) = '".$year."'", NULL, FALSE);
+			$this->db->order_by("tilang.tanggal_tilang", "asc");
 			$query = $this->db->get();
 			return $query->result();
 		}
@@ -146,6 +148,7 @@
 			$this->db->join('kategori', 'sub_kategori.id_kategori = kategori.id_kategori');
 			$this->db->where("MONTH(tanggal_tilang) = '".$month."'", NULL, FALSE);
 			$this->db->where("YEAR(tanggal_tilang) = '".$year."'", NULL, FALSE);
+			$this->db->order_by("tilang.tanggal_tilang", "asc");
 			$query = $this->db->get();
 			$list = $query->result();
 			$data = array();
