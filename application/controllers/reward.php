@@ -30,7 +30,7 @@ class reward extends CI_Controller {
 		$this->output->set_header('Cache-Control:no-store, no-cache, must-revalidate');
 		$this->output->set_header('Cache-Control:post-check=0,pre-check=0',false);
 		$this->output->set_header('Pragma: no-cache');
-
+		$this->load->library("Excel");
 		$this->load->model('M_karyawan');
 		$this->load->model('M_lean');
 		$this->load->model('M_kategori');
@@ -166,6 +166,116 @@ class reward extends CI_Controller {
 		}
 	}
 
+	public function searchByMonth()
+	{
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$bulan = $this->input->post('bulan');
+			$tahun = $this->input->post('tahun');
+			$data["dataReward"] = $this->M_lean->findByDate($bulan,$tahun);
+			$data["dataRewardArray"] = $this->M_lean->findByDateArray($bulan,$tahun);
+			$this->load->view('Reward/v_header.php',$data);
+			$this->load->view('Reward/v_sidebar.php');
+			$this->load->view('Reward/v_reward_data.php',$data);
+			// $this->load->view('Tilang/v_footer.php');
 
+		}
+		
+	}
 
+	public function reportPage(){
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$data["dataKaryawan"] = $this->M_karyawan->selectAll();
+			$this->load->view('Reward/v_header.php',$data);
+			$this->load->view('Reward/v_sidebar.php',$data);
+			$this->load->view('Reward/v_generate_report.php',$data);
+			$this->load->view('Reward/v_footer.php');
+		}
+	}
+
+	public function generateReport(){
+		$bulan = $this->input->post('bulan');
+		$tahun = $this->input->post('tahun');
+		$objPHPExcel = new PHPExcel();
+		$objPHPExcel->getDefaultStyle()->getFont()->setName('Calibri');
+		// set default font size
+		$objPHPExcel->getDefaultStyle()->getFont()->setSize(11);
+		// create the writer
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel2007");
+		// writer already created the first sheet for us, let's get it
+		$objSheet = $objPHPExcel->getActiveSheet();
+		// rename the sheet
+		$objSheet->setTitle('REWARD BULAN ');
+
+		$rowTitle = array();
+		$rowTitle[] = 'B';
+		$rowTitle[] = 'C';
+		$rowTitle[] = 'D';
+		$rowTitle[] = 'E';
+		$rowTitle[] = 'F';
+
+		$rowHeader = 3;
+		// write header
+		$objSheet->getStyle('B'.$rowHeader)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$objSheet->getStyle('B'.$rowHeader)->getFont()->setBold(true)->setSize(14);
+		$objSheet->getCell('B'.$rowHeader)->setValue('PT. PURA NUSAPERSADA UNIT HOLOGRAFI');
+		$objSheet->mergeCells('B'.$rowHeader.':F'.$rowHeader);
+
+		$rowHeader++;
+		$objSheet->getStyle('B'.$rowHeader)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$objSheet->getStyle('B'.$rowHeader)->getFont()->setBold(true)->setSize(14);
+		$objSheet->getCell('B'.$rowHeader)->setValue('IDE / GAGASAN LEAN MANUFACTURING '.$tahun);
+		$objSheet->mergeCells('B'.$rowHeader.':F'.$rowHeader);
+
+		$rowHeader++;
+		$rowHeader++;
+		$objSheet->getCell('B'.$rowHeader)->setValue('NIK');
+		$objSheet->getCell('C'.$rowHeader)->setValue('Nama Lengkap');
+		$objSheet->getCell('D'.$rowHeader)->setValue('Nama Dept');
+		$objSheet->getCell('E'.$rowHeader)->setValue('IDE / GAGASAN');
+		$objSheet->getCell('F'.$rowHeader)->setValue('Reward');
+
+		$borders = array(
+	      'borders' => array(
+	        'inside'     => array(
+	          'style' => PHPExcel_Style_Border::BORDER_THIN,
+
+	          'color' => array(
+	            'argb' => '00000000'
+	          )
+	        ),
+	        'outline' => array(
+	          'style' => PHPExcel_Style_Border::BORDER_THIN,
+	          'color' => array(
+	             'argb' => '00000000'
+	          )
+	        )
+	      )
+	    );
+
+		for($i = 0; $i < count($rowTitle); $i++){
+			$objSheet->getStyle($rowTitle[$i].''.$rowHeader)->getFont()->setBold(true)->setSize(12);
+			$objSheet->getStyle($rowTitle[$i].''.$rowHeader)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$objSheet->getStyle($rowTitle[$i].''.$rowHeader)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+			$objSheet->getStyle($rowTitle[$i].''.$rowHeader)->applyFromArray($borders);
+		}
+
+		$filename = "LAPORAN REWARD BULAN ".$tahun;
+			// We'll be outputting an excel file
+		header('Content-type: application/vnd.ms-excel');
+			// It will be called file.xls
+		header('Content-Disposition: attachment; filename="'.$filename.'.xlsx"');
+			// Write file to the browser
+		$objWriter->save('php://output');
+			// $objWriter->save("D://Test/".$filename.".xlsx");
+	}
 }

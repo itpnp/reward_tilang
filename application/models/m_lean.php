@@ -99,6 +99,34 @@
 		return $success;
 		}
 
+		public function findByDate($month,$year){
+			$this->db->select('*');
+			$this->db->from('lean');
+			$this->db->join('karyawan', 'karyawan.nik = lean.nik');
+			$this->db->where("MONTH(tanggal_pengajuan) = '".$month."'", NULL, FALSE);
+			$this->db->where("YEAR(tanggal_pengajuan) = '".$year."'", NULL, FALSE);
+			$query = $this->db->get();
+			return $query->result();
+		}
+
+		public function findByDateArray($month,$year){
+			$this->db->select('*');
+			$this->db->from('lean');
+			$this->db->join('karyawan', 'lean.nik = lean.nik');
+			$this->db->where("MONTH(tanggal_pengajuan) = '".$month."'", NULL, FALSE);
+			$this->db->where("YEAR(tanggal_pengajuan) = '".$year."'", NULL, FALSE);
+			$query = $this->db->get();
+			$list = $query->result();
+			$data = array();
+			$indexRow = 0;
+			foreach ($list as $row) {
+				$data[$indexRow][0] = $row->id_lean;
+				$data[$indexRow][1] = $row->level_reward;
+				$indexRow++;
+			}
+			return $data;
+		}
+
 	}
 
 ?>

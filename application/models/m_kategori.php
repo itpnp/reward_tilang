@@ -21,6 +21,7 @@
 		public function selectSubCategoryArray(){
 			$this->db->select('*');
 			$this->db->from('sub_kategori');
+			$this->db->where("(status = 'AKTIF')", NULL, FALSE);
 			$query = $this->db->get();
 			$list = $query->result();
 			$data = array();
@@ -36,6 +37,14 @@
 		public function selectAll(){
 			$this->db->select('*');
 			$this->db->from('kategori');
+			$this->db->where("(status = 'AKTIF')", NULL, FALSE);
+			$query = $this->db->get();
+			return $query->result();
+		}
+
+		public function selectSubCategory(){
+			$this->db->select('*');
+			$this->db->from('sub_kategori');
 			$this->db->where("(status = 'AKTIF')", NULL, FALSE);
 			$query = $this->db->get();
 			return $query->result();

@@ -90,29 +90,46 @@ class kabag extends CI_Controller {
 		}
 	}
 
-	// public function saveTilang(){
-	// 	$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
-	// 	if($session!=""){
-	// 		$data = array();
-	// 		$pecah=explode("|",$session);
-	// 		$data["nik"]=$pecah[0];
-	// 		$data["nama"]=$pecah[1];
-	// 		$dataTilang = array();
-	// 		$dataTilang['nik'] = $this->input->post('nik');
-	// 		$dataTilang['nik_penilang'] = $data["nik"];
-	// 		$dataTilang['tanggal_tilang'] = date('Y-m-d H:i',strtotime( $this->input->post('tanggalTilang')));
-	// 		$dataTilang['id_sub_kategori'] = $this->input->post('chooseSubCategory');
-	// 		$dataTilang['nominal_tilang'] = $this->input->post('nominalTilang');
-	// 		// echo $this->input->post('tanggalPengajuan');
-	// 		// exit();
+	public function search()
+	{
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$bulan = $this->input->post('bulan');
+			$tahun = $this->input->post('tahun');
+			$data["dataTilang"] = $this->M_tilang->selectAllByDeptAndTime($bulan,$tahun);
+			$data["dataTilangArray"] = $this->M_tilang->selectArrayByDeptAndTime($bulan,$tahun);
+			$this->load->view('kabag/v_header.php',$data);
+			$this->load->view('kabag/v_sidebar.php');
+			$this->load->view('kabag/v_main.php',$data);
 
-	// 		if($this->M_tilang->savetilang($dataTilang)){
-	// 			$this->index();
-	// 			// echo "SUKSES!!";
-	// 		}else{
+		}
+		
+	}
 
-	// 		}
-	// 	}
-	// }
+	public function searchRewardByMonth()
+	{
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$data["departemen"]=$pecah[2];
+			$bulan = $this->input->post('bulan');
+			$tahun = $this->input->post('tahun');
+			$data["dataReward"] = $this->M_lean->findByDate($bulan,$tahun);
+			$data["dataRewardArray"] = $this->M_lean->findByDateArray($bulan,$tahun);
+			$this->load->view('Kabag/v_header.php',$data);
+			$this->load->view('Kabag/v_sidebar.php',$data);
+			$this->load->view('Kabag/v_reward.php',$data);
+			// $this->load->view('Tilang/v_footer.php');
+
+		}
+		
+	}
 
 }

@@ -7,6 +7,8 @@
                   </li>
                   <li><a href="<?php echo base_url()?>index.php/reward/dataReward"><i class="fa fa-home"></i> DATA  REWARD</a>
                   </li>
+                  <li><a href="<?php echo base_url()?>index.php/reward/reportPage"><i class="fa fa-home"></i> REPORT</a>
+                  </li>
                 </ul>
               </div>
             </div>

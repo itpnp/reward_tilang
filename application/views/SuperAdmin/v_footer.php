@@ -26,6 +26,8 @@
     <script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/dataTables.bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/dataTables.bootstrap.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.id.js"></script>
     <script type="text/javascript">
 
       $(document).ready(function() {
@@ -66,6 +68,20 @@
         data = e.relatedTarget.id;
         $("#idCategoryDelete").val(data);
         })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+          var date_input=$('input[name="tanggalTilang"]'); //our date input has the name "date"
+          var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+          var options={
+            language:'id',
+            format: 'dd MM yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+          };
+          date_input.datepicker(options);
+      })
     </script>
   </body>
 </html>

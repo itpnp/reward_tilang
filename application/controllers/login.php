@@ -64,10 +64,10 @@ class login extends CI_Controller {
 			}else if($dataUser->hak_akses == "KABAG"){
 				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php/kabag'>";
 			}else{
-				echo "<meta http-equiv='refresh' content='0; url=".base_url()."";
+				echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php'>";
 			}
 		}else{
-			echo "<meta http-equiv='refresh' content='0; url=".base_url().">";
+			echo "<meta http-equiv='refresh' content='0; url=".base_url()."index.php'>";
 		}
 
 	}

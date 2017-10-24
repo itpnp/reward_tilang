@@ -85,7 +85,7 @@ class tilang extends CI_Controller {
 			$data["dataKaryawan"] = $this->M_karyawan->findById($id);
 			$data["dataKategori"] = $this->M_kategori->selectAll();
 			$data["subCategory"] = $this->M_kategori->selectSubCategoryArray();
-			$data["jumlahTilang"] = $this->M_tilang->countTotalTicket($id,date('M'));
+			$data["jumlahTilang"] = $this->M_tilang->countTotalTicket($id,date('m'));
 			$data["dendaTilang"] = 0;
 			$nominal = $this->M_nominal->findByJabatan($data["dataKaryawan"]->Kd_Jabatan);
 			if($data["jumlahTilang"]->total==0){
@@ -116,77 +116,67 @@ class tilang extends CI_Controller {
 			$dataTilang = array();
 			$dataTilang['nik'] = $this->input->post('nik');
 			$dataTilang['nik_penilang'] = $data["nik"];
-			$dataTilang['tanggal_tilang'] = date('Y-m-d H:i',strtotime( $this->input->post('tanggalTilang')));
+			$tanggal = explode(' ', $this->input->post('tanggalTilang'));
+			$tanggal = $tanggal[2].'-'.$this->convertBulan($tanggal[1]).'-'.$tanggal[0];
+			$dataTilang['tanggal_tilang'] = $tanggal;
 			$dataTilang['id_sub_kategori'] = $this->input->post('chooseSubCategory');
 			$dataTilang['nominal_tilang'] = $this->input->post('nominalTilang');
-			// echo $this->input->post('tanggalPengajuan');
-			// exit();
-
 			if($this->M_tilang->savetilang($dataTilang)){
 				$this->index();
-				// echo "SUKSES!!";
 			}else{
 
 			}
 		}
 	}
-	// public function dataReward(){
-	// 	$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
-	// 	if($session!=""){
-	// 		$data = array();
-	// 		$pecah=explode("|",$session);
-	// 		$data["nik"]=$pecah[0];
-	// 		$data["nama"]=$pecah[1];
-	// 		$data["dataReward"] = $this->M_lean->selectAll();
-	// 		$data["dataRewardArray"] = $this->M_lean->selectArray();
-	// 		$this->load->view('Reward/v_header.php',$data);
-	// 		$this->load->view('Reward/v_sidebar.php',$data);
-	// 		$this->load->view('Reward/v_reward_data.php',$data);
-	// 		// $this->load->view('Reward/v_footer.php');
-	// 	}
-	// }
 
-	// public function registerBounty($id){
-	// 	$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
-	// 	if($session!=""){
-	// 		$data = array();
-	// 		$pecah=explode("|",$session);
-	// 		$data["nik"]=$pecah[0];
-	// 		$data["nama"]=$pecah[1];
-	// 		$data["dataLean"] = $this->M_lean->findById($id);
-	// 		$this->load->view('Reward/v_header.php',$data);
-	// 		$this->load->view('Reward/v_sidebar.php',$data);
-	// 		$this->load->view('Reward/v_upgrade_status.php',$data);
-	// 		$this->load->view('Reward/v_footer.php');
-	// 	}
-	// }
+	public function convertBulan($bulan){
+		if($bulan == "Januari"){
+			return "01";
+		}else if($bulan == "Februari"){
+			return "02";
+		}else if($bulan == "Maret"){
+			return "03";
+		}else if($bulan == "April"){
+			return "04";
+		}else if($bulan == "Mei"){
+			return "05";
+		}else if($bulan == "Juni"){
+			return "06";
+		}else if($bulan == "Juli"){
+			return "07";
+		}else if($bulan == "Agustus"){
+			return "08";
+		}else if($bulan == "September"){
+			return "09";
+		}else if($bulan == "Oktober"){
+			return "10";
+		}else if($bulan == "November"){
+			return "11";
+		}else if($bulan == "Desember"){
+			return "12";
+		}
 
-	// public function saveBounty(){
-	// 	$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
-	// 	if($session!=""){
-	// 		$data = array();
-	// 		$pecah=explode("|",$session);
-	// 		$data["nik"]=$pecah[0];
-	// 		$data["nama"]=$pecah[1];
-	// 		$dataLean = array();
-	// 		$idLean = $this->input->post('idLean');
-	// 		$nominal = $this->input->post('nominalReward');
-	// 		$nominal = str_replace("Rp.","",$nominal);
-	// 		$nominal = str_replace(".","",$nominal);
-	// 		// echo $nominal;
-	// 		// exit();
-	// 		$dataLean['level_reward'] = $this->input->post('level');
-	// 		$dataLean['tanggal_penyerahan_reward'] = date("Y-m-d",strtotime($this->input->post('tanggalPenyerahan')));
-	// 		$dataLean['nominal_reward'] = $this->input->post('nominal_reward');
+	}
 
-	// 		if($this->M_lean->update($idLean,$dataLean)){
-	// 			$this->dataReward();
-	// 		}
+	public function search()
+	{
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$bulan = $this->input->post('bulan');
+			$tahun = $this->input->post('tahun');
 
-			
-	// 	}
-	// }
+			$data["dataTilang"] = $this->M_tilang->findByDate($bulan,$tahun);
+			$data["dataTilangArray"] = $this->M_tilang->findByDateArray($bulan,$tahun);
+			$this->load->view('Tilang/v_header.php',$data);
+			$this->load->view('Tilang/v_sidebar.php');
+			$this->load->view('Tilang/v_main.php',$data);
+			// $this->load->view('Tilang/v_footer.php');
 
-
-
+		}
+		
+	}
 }

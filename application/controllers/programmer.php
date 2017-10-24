@@ -35,6 +35,7 @@ class programmer extends CI_Controller {
 		$this->load->model('M_kategori');
 		$this->load->model('M_login');
 		$this->load->model('M_nominal');
+		$this->load->model('M_tilang');
 		// $this->load->library('Userauth');
 		
 	}
@@ -368,5 +369,127 @@ class programmer extends CI_Controller {
 			$this->load->view('SuperAdmin/v_fine_page.php',$data);
 			$this->load->view('SuperAdmin/v_footer.php');
 		}
+	}
+
+	public function chooseDataTilang(){
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$data["dataTilang"] = $this->M_tilang->selectAll();
+			$this->load->view('SuperAdmin/v_header.php',$data);
+			$this->load->view('SuperAdmin/v_sidebar.php');
+			$this->load->view('SuperAdmin/v_choose_data_tilang.php',$data);
+			$this->load->view('SuperAdmin/v_footer.php');
+
+		}
+	}
+
+	public function editTilang($param){
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$data["dataKategori"] = $this->M_kategori->selectAll();
+			$data["dataSubCategory"] = $this->M_kategori->selectSubCategory();
+			$data["subCategoryArray"] = $this->M_kategori->selectSubCategoryArray();
+			$data["dataTilang"] = $this->M_tilang->findById($param);
+			$data["dataTilang"]->tanggal_tilang = $this->convertIndonesiaDate($data["dataTilang"]->tanggal_tilang);
+			$this->load->view('SuperAdmin/v_header.php',$data);
+			$this->load->view('SuperAdmin/v_sidebar.php');
+			$this->load->view('SuperAdmin/v_edit_tilang.php',$data);
+			$this->load->view('SuperAdmin/v_footer.php');
+
+		}
+	}
+
+	public function saveUpdateTilang(){
+		$session=isset($_SESSION['userdata']) ? $_SESSION['userdata']:'';
+		if($session!=""){
+			$data = array();
+			$pecah=explode("|",$session);
+			$data["nik"]=$pecah[0];
+			$data["nama"]=$pecah[1];
+			$dataTilang = array();
+			$id = $this->input->post('idTilang');
+			$dataTilang['nik'] = $this->input->post('nik');
+			$dataTilang['nik_penilang'] = $data["nik"];
+			$tanggal = explode(' ', $this->input->post('tanggalTilang'));
+			$tanggal = $tanggal[2].'-'.$this->convertBulan($tanggal[1]).'-'.$tanggal[0];
+			$dataTilang['tanggal_tilang'] = $tanggal;
+			$dataTilang['id_sub_kategori'] = $this->input->post('chooseSubCategory');
+			// echo $dataTilang['id_sub_kategori'];
+			// exit();
+			// $dataTilang['nominal_tilang'] = $this->input->post('nominalTilang');
+			if($this->M_tilang->updateTilang($id,$dataTilang)){
+				$this->index();
+			}else{
+
+			}
+		}
+	}
+
+	public function convertIndonesiaDate($param){
+		$tanggal = explode('-',$param);
+		if($tanggal[1] == "01"){
+			$bulan =  "Januari";
+		}else if($tanggal[1]== "02"){
+			$bulan =  "Februari";
+		}else if($tanggal[1] == "03"){
+			$bulan =  "Maret";
+		}else if($tanggal[1] == "04"){
+			$bulan =  "April";
+		}else if($tanggal[1] == "05"){
+			$bulan =  "Mei";
+		}else if($tanggal[1] == "06"){
+			$bulan =  "Juni";
+		}else if($tanggal[1]== "07"){
+			$bulan =  "Juli";
+		}else if($tanggal[1]== "08"){
+			$bulan =  "Agustus";
+		}else if($tanggal[1] == "09"){
+			$bulan = "September";
+		}else if($tanggal[1] == "10"){
+			$bulan =  "Oktober";
+		}else if($tanggal[1] == "11"){
+			$bulan =  "November";
+		}else if($tanggal[1] == "12"){
+			$bulan =  "Desember";
+		}
+
+		return $tanggal[2].' '.$bulan.' '.$tanggal[0];
+	}
+
+	public function convertBulan($bulan){
+		if($bulan == "Januari"){
+			return "01";
+		}else if($bulan == "Februari"){
+			return "02";
+		}else if($bulan == "Maret"){
+			return "03";
+		}else if($bulan == "April"){
+			return "04";
+		}else if($bulan == "Mei"){
+			return "05";
+		}else if($bulan == "Juni"){
+			return "06";
+		}else if($bulan == "Juli"){
+			return "07";
+		}else if($bulan == "Agustus"){
+			return "08";
+		}else if($bulan == "September"){
+			return "09";
+		}else if($bulan == "Oktober"){
+			return "10";
+		}else if($bulan == "November"){
+			return "11";
+		}else if($bulan == "Desember"){
+			return "12";
+		}
+
 	}
 }

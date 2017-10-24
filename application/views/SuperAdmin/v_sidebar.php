@@ -5,7 +5,7 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> KARYAWAN <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="index.html">TAMBAH KARYAWAN</a></li>
+                      <!-- <li><a href="index.html">TAMBAH KARYAWAN</a></li> -->
                       <li><a href="<?php echo base_url()?>index.php/programmer/showDataKaryawan">DATA KARYAWAN</a></li>
 
                     </ul>
@@ -17,6 +17,7 @@
                       <li><a href="<?php echo base_url()?>index.php/programmer/kategoriPage">Kategori Tilang</a></li>
                       <li><a href="<?php echo base_url()?>index.php/programmer/subKategoriPage">Sub Kategori Tilang</a></li>
                       <li><a href="<?php echo base_url()?>index.php/programmer/finePage">Tarif Tilang</a></li>
+                      <li><a href="<?php echo base_url()?>index.php/programmer/chooseDataTilang">Edit Tilang</a></li>
                     </ul>
                   </li>
                 </ul>

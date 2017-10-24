@@ -21,13 +21,13 @@
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama Karyawan</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input class="form-control" id="namaKaryawan" value="<?php if($dataKaryawan != null) echo $dataKaryawan->Nm_Karyawan ;?>" name="namaKaryawan" type="text" required disabled/>
+                  <input class="form-control" id="namaKaryawan" value="<?php if($dataKaryawan != null) echo $dataKaryawan->Nm_Karyawan ;?>" name="namaKaryawan" type="text" required readonly/>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Jumlah Tilang Bulan Ini </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input class="form-control" id="namaKaryawan" value="<?php if($jumlahTilang != null) echo $jumlahTilang->total ;?>" name="namaKaryawan" type="text" required disabled/>
+                  <input class="form-control" id="namaKaryawan" value="<?php if($jumlahTilang != null) echo $jumlahTilang->total ;?>" name="namaKaryawan" type="text" required readonly/>
                 </div>
               </div>
               <div class="ln_solid"></div>
@@ -118,7 +118,7 @@
       if(typeof subCategory[i][1] !=='undefined'){
         if(subCategory[i][1]==idCategory){
           var opt = document.createElement('option');
-          opt.value = subCategory[i][1];
+          opt.value = subCategory[i][0];
           opt.innerHTML = subCategory[i][2];
           f.appendChild(opt);
         }

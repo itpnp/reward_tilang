@@ -11,7 +11,7 @@
               </div>
             </div>
             <div class="clearfix"></div>
-            <form role="form" action="<?php echo base_url()?>index.php/tilang/saveTilang" method="post" data-parsley-validate class="form-horizontal form-label-left">
+            <form role="form" action="<?php echo base_url()?>index.php/tilang/search" method="post" data-parsley-validate class="form-horizontal form-label-left">
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -21,10 +21,33 @@
                   </div>
                   <div class="x_content">
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Tanggal Pelanggaran</label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input class="form-control" id="date" name="tanggalTilang" type="text" required/>
+                      <label class="control-label col-md-2 col-sm-2 col-xs-12">BULAN</label>
+                      <div class="col-md-3 col-sm-3 col-xs-12">
+                      <select class="form-control" name="bulan">
+                        <option value="01">JANUARI</option>
+                        <option value="02">FEBRUARI</option>
+                        <option value="03">MARET</option>
+                        <option value="04">APRIL</option>
+                        <option value="05">MEI</option>
+                        <option value="06">JUNI</option>
+                        <option value="07">JULI</option>
+                        <option value="08">AGUSTUS</option>
+                        <option value="09">SEPTEMBER</option>
+                        <option value="10">OKTOBER</option>
+                        <option value="11">NOVEMBER</option>
+                        <option value="12">DESEMBER</option>
+                      </select>
                       </div>
+                      <div class="col-md-3 col-sm-3 col-xs-12">
+                      <select class="form-control" name="tahun">
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                      </select>
+                      </div>
+                      <button type="submit" class="btn btn-success">CARI</button>
                     </div>
                   </div>
                 </div>
@@ -58,7 +81,7 @@
                                   echo "<tr>
                                     <td class='warning'>".$row->NIK."</td>
                                     <td class='warning'>".$row->Nm_Karyawan."</td>
-                                    <td class='warning'>".$row->tanggal_tilang."</td>
+                                    <td class='warning'>".date('d M Y',strtotime($row->tanggal_tilang))."</td>
                                     <td class='warning'>".$row->nama_kategori."</td>
                                     </tr>";
                                 }
@@ -179,7 +202,7 @@
                 yAxes: [{
                     ticks: {
                         max : jumlahData, 
-                        stepSize: 1,
+                        stepSize: 9,
                         beginAtZero:true
                     }
                 }]

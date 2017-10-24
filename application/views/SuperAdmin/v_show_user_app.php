@@ -73,32 +73,9 @@
                   <div class="col-md-7 col-sm-7 col-xs-12">
                     <select class="form-control col-md-7 col-xs-12" name="chooseUserAppModal" id="chooseUserAppModal" required>
                     <option value="0">-- Pilih Hak Akses --</option>
-                    <?php 
-                    echo $dataPengguna->hak_akses;
-                    if($dataPengguna->hak_akses == 'TILANG'){
-                     echo  '<option value=TILANG>TILANG</option>
-                                <option value=KABAG>KABAG</option>
-                                <option value=REWARD>REWARD</option>
-                                <option value=SUPER ADMIN>SUPER ADMIN</option>';
-                    }
-                     else if($dataPengguna->hak_akses == 'REWARD'){
-                     echo  '<option value=REWARD>REWARD</option>
-                                <option value=KABAG>KABAG</option>
-                                <option value=TILANG>TILANG</option>
-                                <option value=SUPER ADMIN>SUPER ADMIN</option>';
-                    }
-                      else if($dataPengguna->hak_akses == 'KABAG'){
-                     echo  '<option value=KABAG>KABAG</option>
-                                <option value=REWARD>REWARD</option>
-                                <option value=TILANG>TILANG</option>
-                                <option value=SUPER ADMIN>SUPER ADMIN</option>';
-                    }
-                     else if($dataPengguna->hak_akses == 'SUPER ADMIN'){
-                     echo  '<option value=SUPER ADMIN>SUPER ADMIN</option>
-                                <option value=REWARD>REWARD</option>
-                                <option value=TILANG>TILANG</option>
-                                <option value=KABAG>KABAG</option>';
-                    }
+                    <?php
+                      
+
                    ?>
                    </select>
                   </div>
